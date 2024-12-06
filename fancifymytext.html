@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy My Text</title>
+    <script>
+        // Function to show an alert when the "Bigger!" button is clicked
+        function showAlert() {
+            alert("Hello, world!");
+        }
+
+        // Function to increase the text size when the "Bigger!" button is clicked
+        function makeTextBigger() {
+            const textArea = document.getElementById("textArea");
+            textArea.style.fontSize = "24pt"; // Set font size to 24pt
+        }
+
+        // Function to apply styles based on selected radio button
+        function applyStyle() {
+            const textArea = document.getElementById("textArea");
+            const fancy = document.getElementById("fancy");
+            const boring = document.getElementById("boring");
+
+            if (fancy.checked) {
+                textArea.style.fontWeight = "bold"; // Set font weight to bold
+                textArea.style.color = "blue"; // Set color to blue
+                textArea.style.textDecoration = "underline"; // Underline the text
+            } else if (boring.checked) {
+                textArea.style.fontWeight = "normal"; // Set font weight to normal
+                textArea.style.color = ""; // Reset color
+                textArea.style.textDecoration = ""; // Reset text decoration
+            }
+        }
+
+        // Function to add "-Moo" to the last word of each sentence and uppercase the text
+        function mooText() {
+            const textArea = document.getElementById("textArea");
+            let text = textArea.value;
+
+            // Split sentences by "."
+            let sentences = text.split(".");
+            
+            // Process each sentence
+            sentences = sentences.map(sentence => {
+                sentence = sentence.trim(); // Remove leading/trailing spaces
+                if (sentence) {
+                    // Add "-Moo" to the last word and uppercase
+                    const words = sentence.split(" ");
+                    words[words.length - 1] += "-Moo"; // Add "-Moo" to the last word
+                    return words.join(" ").toUpperCase(); // Join words and uppercase
+                }
+                return "";
+            });
+            
+            // Join sentences back together with "." and set to text area
+            textArea.value = sentences.join(". ") + (sentences.length > 1 ? '.' : '');
+        }
+
+        // Event listeners
+        window.onload = function() {
+            document.getElementById("biggerButton").onclick = function() {
+                makeTextBigger(); // Increase the text size
+                showAlert(); // Call alert function to show "Hello, world!"
+            };
+
+            document.getElementById("mooButton").onclick = mooText; // Link the Moo button functionality
+        }
+    </script>
+</head>
+<body>
+    <h1>Fancy My Text</h1>
+    
+    <fieldset>
+        <legend>Text</legend>
+        <textarea id="textArea" rows="4" cols="30"></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>Fancify</legend>
+        <button id="biggerButton">Bigger!</button>
+        <br>
+        <label>
+            <input type="radio" name="style" id="fancy" onchange="applyStyle()"> FancyShmancy
+        </label>
+        <label>
+            <input type="radio" name="style" id="boring" onchange="applyStyle()"> BoringBetty
+        </label>
+        <br>
+        <button id="mooButton">Moo</button>
+    </fieldset>
+</body>
+</html>
